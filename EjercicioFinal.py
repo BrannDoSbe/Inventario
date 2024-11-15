@@ -5,7 +5,7 @@ class Producto:
         self.__precio = precio
         self.__cantidad = cantidad
 
-    #Getters Setters
+    # Métodos getter y setter para acceder a los atributos privados
     @property
     def nombre(self):
         return self.__nombre
