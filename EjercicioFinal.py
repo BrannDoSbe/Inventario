@@ -84,8 +84,8 @@ class Inventario:
         print(f"Producto '{nombre}' no encontrado en el inventario.")
 
 
-# Funciones de entrada segura para validación
-def ingresar_numero_positivo(mensaje):
+# Validación de datos de entrada
+def validar_precio(mensaje):
     while True:
         try:
             valor = float(input(mensaje))
@@ -96,7 +96,7 @@ def ingresar_numero_positivo(mensaje):
         except ValueError:
             print("Entrada inválida. Por favor, ingresa un número.")
 
-def ingresar_cantidad(mensaje):
+def validar_cantidad(mensaje):
     while True:
         try:
             valor = int(input(mensaje))
@@ -107,6 +107,27 @@ def ingresar_cantidad(mensaje):
         except ValueError:
             print("Entrada inválida. Por favor, ingresa un número entero.")
 
+# Solicitud de ingreso de Precio
+def ingresar_precio():
+    while True:
+        input_precio = input("¿Quieres cambiar el precio? (s/n): ").lower()
+        if input_precio == 's':
+            return validar_precio("Nuevo precio (deja en blanco para no cambiar): ")
+        elif input_precio == 'n':
+            break
+        elif input_precio.strip() == '':
+            return None
+        
+# Solicitud de ingreso de Cantidad        
+def ingresar_cantidad():
+    while True:
+        input_cantidad = input("¿Quieres cambiar la cantidad? (s/n): ").lower()
+        if input_cantidad == 's':
+            return validar_cantidad("Nueva cantidad (deja en blanco para no cambiar): ")
+        elif input_cantidad == 'n':
+            break
+        elif input_cantidad.strip() == '':
+            return None
 
 # Función para mostrar el menú
 def mostrar_menu():
@@ -130,16 +151,16 @@ while True:
         # Agregar producto
         nombre = input("Nombre del producto: ")
         categoria = input("Categoría del producto: ")
-        precio = ingresar_numero_positivo("Precio del producto: ")
-        cantidad = ingresar_cantidad("Cantidad en stock: ")
+        precio = validar_precio("Precio del producto: ")
+        cantidad = validar_cantidad("Cantidad en stock: ")
         producto = Producto(nombre, categoria, precio, cantidad)
         inventario.agregar_producto(producto)
 
     elif opcion == '2':
         # Actualizar producto
         nombre_actualizar = input("Nombre del producto a actualizar: ")
-        nuevo_precio = ingresar_numero_positivo("Nuevo precio (deja en blanco para no cambiar): ") if input("¿Quieres cambiar el precio? (s/n): ").lower() == 's' else None
-        nueva_cantidad = ingresar_cantidad("Nueva cantidad (deja en blanco para no cambiar): ") if input("¿Quieres cambiar la cantidad? (s/n): ").lower() == 's' else None
+        nuevo_precio = ingresar_precio()
+        nueva_cantidad = ingresar_cantidad()
         inventario.actualizar_producto(nombre_actualizar, nuevo_precio, nueva_cantidad)
 
     elif opcion == '3':
